@@ -13,6 +13,10 @@ class Bullet(object):
         self.can_shoot = True
         self.cooldown = 100
 
+    def run(self, nave):
+        self.shoot(nave)
+        self.move()
+
     def shoot(self, nave):
         if keyboard.key_pressed("space") and self.can_shoot:
             bullet = Sprite("./images/bullet.png")

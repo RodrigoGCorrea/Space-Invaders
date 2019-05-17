@@ -1,6 +1,7 @@
 from PPlay.sprite import Sprite
 from PPlay.keyboard import Keyboard
 from bullet import Bullet
+from enemy import Enemy
 
 import GVar
 
@@ -11,14 +12,14 @@ class Spaceship(object):
         self.window = window
         self.spaceship = Sprite("./images/spaceship.png")
         self.bullet_control = Bullet(window)
+        self.enemy_control = Enemy(window, "./lvl/alien_spawn.txt")
         self.velocity = 0
         self.__set_pos()
-        self.__draw()
 
     def run(self):
         self.__draw()
-        self.bullet_control.shoot(self.spaceship)
-        self.bullet_control.move()
+        self.bullet_control.run(self.spaceship)
+        self.enemy_control.run()
         self.move(self.velocity)
 
     def move(self, velocity):
