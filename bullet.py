@@ -15,6 +15,7 @@ class Bullet(object):
 
     def run(self, nave):
         self.shoot(nave)
+        self.destroy()
         self.move()
 
     def shoot(self, nave):
@@ -34,3 +35,8 @@ class Bullet(object):
         for bullet in self.bullet_array:
             bullet.y -= self.bullet_speed * self.window.delta_time()
             bullet.draw()
+    
+    def destroy(self):
+        for Bullet in self.bullet_array:
+            if Bullet.y <= 0:
+                self.bullet_array.remove(Bullet)

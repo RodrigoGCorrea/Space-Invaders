@@ -1,7 +1,7 @@
 from PPlay.window import Window
 from PPlay.keyboard import Keyboard
 from menu import Menu
-from spaceship import Spaceship
+from play import Play
 import GVar
 
 window = Window(GVar.WIDTH, GVar.HEIGHT)
@@ -11,7 +11,7 @@ window.set_background_color((0, 0, 0))
 keyboard = Keyboard()
 
 menu = Menu(window)
-nave = Spaceship(window)
+play = Play(window, "./lvl/alien_spawn.txt")
 
 window.update()
 while GVar.STATE != 4:
@@ -22,6 +22,6 @@ while GVar.STATE != 4:
     if GVar.STATE == 0:
         menu.run()
     if GVar.STATE == 1:
-        nave.run()
+        play.run()
 
     window.update()

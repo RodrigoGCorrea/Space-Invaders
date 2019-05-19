@@ -1,5 +1,4 @@
 from PPlay.sprite import Sprite
-from PPlay.gameimage import GameImage
 
 import GVar
 
@@ -7,23 +6,15 @@ class Enemy(object):
     def __init__(self, window, alien_spawn_adress):
         self.window = window
         self.enemy_mtx = []
-        self.enemy_speed = 200
+        self.enemy_speed = GVar.ENEMY_SPEED
         self.spawn(alien_spawn_adress)
-
+        self.speed_change_direction = "False"
     
     def run(self):
         self.move()
         self.__draw()
 
     def spawn(self, alien_spawn_adress):
-        border_1 = GameImage("./images/alien.png")
-        border_2 = GameImage("./images/alien.png")
-        border_1.set_position(265, 200)
-        border_2.set_position(265 + 11 * (border_2.width + 10), 200)
-        
-        self.enemy_mtx.append(border_1)
-        self.enemy_mtx.append(border_2)
-
         level_control = open(alien_spawn_adress, "r")
         line = level_control.readline()
         lin = 0
@@ -31,21 +22,36 @@ class Enemy(object):
             for col in range(len(line)):
                 if line[col] == "1":
                     alien = Sprite("./images/alien.png")
-                    alien.set_position(265 + col * (alien.width + 10), 200 + lin * (alien.height + 10))
+                    alien.set_position(265 + col * (alien.width + 10), GVar.ENEMY_SPAWN_HEIGHT + lin * (alien.height + 10))
                     self.enemy_mtx.append(alien)
             lin += 1
             line = level_control.readline()
 
 
     def move(self):
-        speed = GVar.ENEMY_SPEED
-        if self.enemy_mtx[0].x == 0:
-            speed = -speed
-        elif self.enemy_mtx[1].x == (GVar.WIDTH - self.enemy_mtx[1].height):
-            speed = -speed
+        #change speed
         for alien in self.enemy_mtx:
-            alien.x += speed * self.window.delta_time()
+            if alien.x <= 0:
+                self.speed_change_direction = "left"
+                self.enemy_speed = -self.enemy_speed
+                break
+            elif alien.x >= (GVar.WIDTH - alien.width):
+                self.speed_change_direction = "right"
+                self.enemy_speed = -self.enemy_speed
+                break
+        #reset position
+        if self.speed_change_direction == "left":
+            self.speed_change_direction = "False"
+            for alien in self.enemy_mtx:
+                alien.set_position(alien.x + 2, alien.y + alien.height)
+        elif self.speed_change_direction == "right":
+            self.speed_change_direction = "False"
+            for alien in self.enemy_mtx:
+                alien.set_position(alien.x - 2, alien.y + alien.height)
+        #move
+        for alien in self.enemy_mtx:
+            alien.x += self.enemy_speed * self.window.delta_time()
 
     def __draw(self):
-        for i in range(2, len(self.enemy_mtx)):
+        for i in range(len(self.enemy_mtx)):
             self.enemy_mtx[i].draw()

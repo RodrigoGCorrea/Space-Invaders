@@ -11,15 +11,11 @@ class Spaceship(object):
     def __init__(self, window):
         self.window = window
         self.spaceship = Sprite("./images/spaceship.png")
-        self.bullet_control = Bullet(window)
-        self.enemy_control = Enemy(window, "./lvl/alien_spawn.txt")
         self.velocity = 0
         self.__set_pos()
 
     def run(self):
         self.__draw()
-        self.bullet_control.run(self.spaceship)
-        self.enemy_control.run()
         self.move(self.velocity)
 
     def move(self, velocity):
