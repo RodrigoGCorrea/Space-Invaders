@@ -2,6 +2,7 @@ from PPlay.window import Window
 from PPlay.keyboard import Keyboard
 from menu import Menu
 from play import Play
+from difficulty import Difficulty
 import GVar
 
 window = Window(GVar.WIDTH, GVar.HEIGHT)
@@ -12,6 +13,7 @@ keyboard = Keyboard()
 
 menu = Menu(window)
 play = Play(window, "./lvl/alien_spawn.txt")
+difficulty_menu = Difficulty(window)
 
 window.update()
 while GVar.STATE != 4:
@@ -23,5 +25,8 @@ while GVar.STATE != 4:
         menu.run()
     if GVar.STATE == 1:
         play.run()
+        print(GVar.DIFC)
+    if GVar.STATE == 2:
+        difficulty_menu.run()
 
     window.update()
