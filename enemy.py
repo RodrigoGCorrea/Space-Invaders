@@ -1,10 +1,14 @@
 from PPlay.sprite import Sprite
+from PPlay.keyboard import Keyboard
 
 import GVar
+
+keyboard = Keyboard()
 
 class Enemy(object):
     def __init__(self, window, alien_spawn_adress):
         self.window = window
+        self.alien_spawn_adress = alien_spawn_adress
         self.enemy_mtx = []
         self.enemy_speed = GVar.ENEMY_SPEED
         self.spawn(alien_spawn_adress)
