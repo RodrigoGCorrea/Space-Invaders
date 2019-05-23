@@ -10,7 +10,7 @@ class Enemy(object):
         self.window = window
         self.alien_spawn_adress = alien_spawn_adress
         self.enemy_mtx = []
-        self.enemy_speed = GVar.ENEMY_SPEED
+        self.enemy_speed = GVar.ENEMY_SPEED * GVar.DIFC
         self.spawn(alien_spawn_adress)
         self.speed_change_direction = "False"
     

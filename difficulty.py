@@ -17,15 +17,19 @@ class Difficulty(object):
         self.__draw()
         self.set_difficulty()
 
+
     def set_difficulty(self):
         if mouse.is_over_object(self.easy_button) and mouse.is_button_pressed(1):
-            GVar.DIFC = 0
+            GVar.DIFC = 1 * GVar.DIFC_MULTIPLIER
+            GVar.DIFC_CHOSEN = True
             GVar.STATE = 1
         if mouse.is_over_object(self.norm_button) and mouse.is_button_pressed(1):
-            GVar.DIFC = 1
+            GVar.DIFC = 2 * GVar.DIFC_MULTIPLIER
+            GVar.DIFC_CHOSEN = True
             GVar.STATE = 1
         if mouse.is_over_object(self.hard_button) and mouse.is_button_pressed(1):
-            GVar.DIFC = 2
+            GVar.DIFC = 3 * GVar.DIFC_MULTIPLIER
+            GVar.DIFC_CHOSEN = True
             GVar.STATE = 1
 
     def __draw(self):

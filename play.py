@@ -3,6 +3,8 @@ from enemy import Enemy
 from bullet import Bullet
 from PPlay.keyboard import Keyboard
 
+import GVar
+
 keyboard = Keyboard()
 
 class Play(object):
@@ -17,6 +19,7 @@ class Play(object):
         self.spaceship.run()
         self.enemy.run()
         self.bullet.run(self.spaceship.spaceship)
+        self.game_over()
         self.point()
     
     def point(self):
@@ -25,3 +28,10 @@ class Play(object):
                 if bullet.collided_perfect(alien):
                     self.enemy.enemy_mtx.remove(alien)
                     self.bullet.bullet_array.remove(bullet)
+    
+    def game_over(self):
+        for alien in self.enemy.enemy_mtx:
+            if alien.collided_perfect(self.spaceship.spaceship):
+                GVar.STATE = 0
+                self.__init__(self.window, self.alien_spawn_adress)
+                break

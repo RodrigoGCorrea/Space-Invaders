@@ -21,12 +21,14 @@ while GVar.STATE != 4:
 
     if keyboard.key_pressed("esc"):
         GVar.STATE = 0
+        play.__init__(window, "./lvl/alien_spawn.txt")
     if GVar.STATE == 0:
         menu.run()
     if GVar.STATE == 1:
+        if GVar.DIFC_CHOSEN == True:
+            play.__init__(window, "./lvl/alien_spawn.txt")
+            GVar.DIFC_CHOSEN = False
         play.run()
-        print(GVar.DIFC)
     if GVar.STATE == 2:
         difficulty_menu.run()
-
     window.update()
