@@ -16,6 +16,7 @@ class Enemy(object):
     
     def run(self):
         self.move()
+        self.restart()
         self.__draw()
 
     def spawn(self, alien_spawn_adress):
@@ -59,3 +60,7 @@ class Enemy(object):
     def __draw(self):
         for i in range(len(self.enemy_mtx)):
             self.enemy_mtx[i].draw()
+    
+    def restart(self):
+        if len(self.enemy_mtx) == 0:
+            GVar.STATE = 0
