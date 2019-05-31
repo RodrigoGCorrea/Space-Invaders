@@ -8,22 +8,21 @@ keyboard = Keyboard()
 class Enemy(object):
     def __init__(self, window, alien_spawn_adress):
         self.window = window
-        self.alien_spawn_adress = alien_spawn_adress
         self.enemy_mtx = []
         self.enemy_speed = GVar.ENEMY_SPEED * GVar.DIFC * GVar.DIFC_MULTIPLIER
         self.spawn(alien_spawn_adress)
         self.speed_change_direction = "False"
+        self.start = False
     
     def run(self):
         self.move()
-        self.restart()
         self.__draw()
 
     def spawn(self, alien_spawn_adress):
         level_control = open(alien_spawn_adress, "r")
         line = level_control.readline()
         lin = 0
-        while lin < 5:
+        while lin < 7:
             for col in range(len(line)):
                 if line[col] == "1":
                     alien = Sprite("./images/alien.png")
@@ -34,6 +33,11 @@ class Enemy(object):
 
 
     def move(self):
+        #start game
+        if keyboard.key_pressed("enter"):
+            self.start = True
+        if len(self.enemy_mtx) == 0:
+            self.start = False
         #change speed
         for alien in self.enemy_mtx:
             if alien.x <= 0:
@@ -55,12 +59,9 @@ class Enemy(object):
                 alien.set_position(alien.x - 2, alien.y + alien.height)
         #move
         for alien in self.enemy_mtx:
-            alien.x += self.enemy_speed * self.window.delta_time()
+            if self.start == True:
+                alien.x += self.enemy_speed * self.window.delta_time()
 
     def __draw(self):
         for i in range(len(self.enemy_mtx)):
             self.enemy_mtx[i].draw()
-    
-    def restart(self):
-        if len(self.enemy_mtx) == 0:
-            GVar.STATE = 0

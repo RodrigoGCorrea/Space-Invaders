@@ -20,6 +20,8 @@ class Play(object):
             "up": 0,
             "down": 0 
         }
+        self.clock = 0
+        self.level = 1
     
     def run(self):
         self.spaceship.run()
@@ -28,6 +30,8 @@ class Play(object):
         self.game_over()
         self.set_border()
         self.point()
+        self.run_clock()
+        self.new_level()
 
     def set_border(self):
         for alien in self.enemy.enemy_mtx:
@@ -49,9 +53,18 @@ class Play(object):
                             self.bullet.bullet_array.remove(bullet)
                             self.enemy.enemy_mtx.remove(alien)
 
+    def new_level(self):
+        if len(self.enemy.enemy_mtx) == 0:
+            self.level += 1
+            self.enemy.__init__(self.window, "./lvl/level_" + str(self.level) + ".txt")
+
     def game_over(self):
         for alien in self.enemy.enemy_mtx:
             if alien.collided_perfect(self.spaceship.spaceship):
                 GVar.STATE = 0
                 self.__init__(self.window, self.alien_spawn_adress)
                 break
+    
+    def run_clock(self):
+        if len(self.enemy.enemy_mtx) != 0:
+            self.clock += self.window.delta_time()
