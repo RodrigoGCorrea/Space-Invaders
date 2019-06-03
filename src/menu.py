@@ -1,15 +1,15 @@
-from PPlay.sprite import Sprite
-from PPlay.mouse import Mouse
+from assets.PPlay.sprite import Sprite
+from assets.PPlay.mouse import Mouse
 
 import GVar
 
 class Menu(object):
     def __init__(self, window):
         self.window = window
-        self.play = Sprite("./images/play.png")
-        self.difc = Sprite("./images/difc.png")
-        self.rank = Sprite("./images/rank.png")
-        self.quit = Sprite("./images/quit.png")
+        self.play = Sprite("./assets/images/play.png")
+        self.difc = Sprite("./assets/images/difc.png")
+        self.rank = Sprite("./assets/images/rank.png")
+        self.quit = Sprite("./assets/images/quit.png")
         self.mouse = Mouse()
         self.__set_pos()
         self.__draw()

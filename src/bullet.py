@@ -1,5 +1,5 @@
-from PPlay.keyboard import Keyboard
-from PPlay.sprite import Sprite
+from assets.PPlay.keyboard import Keyboard
+from assets.PPlay.sprite import Sprite
 
 import GVar
 
@@ -20,7 +20,7 @@ class Bullet(object):
 
     def shoot(self, nave):
         if keyboard.key_pressed("space") and self.can_shoot:
-            bullet = Sprite("./images/bullet.png")
+            bullet = Sprite("./assets/images/bullet.png")
             bullet.set_position(nave.x + nave.width/2, nave.y)
             self.bullet_array.append(bullet)
             self.can_shoot = False

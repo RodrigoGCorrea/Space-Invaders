@@ -1,5 +1,5 @@
-from PPlay.sprite import Sprite
-from PPlay.keyboard import Keyboard
+from assets.PPlay.sprite import Sprite
+from assets.PPlay.keyboard import Keyboard
 from bullet import Bullet
 from enemy import Enemy
 
@@ -10,7 +10,7 @@ keyboard = Keyboard()
 class Spaceship(object):
     def __init__(self, window):
         self.window = window
-        self.spaceship = Sprite("./images/spaceship.png")
+        self.spaceship = Sprite("./assets/images/spaceship.png")
         self.velocity = 0
         self.__set_pos()
 

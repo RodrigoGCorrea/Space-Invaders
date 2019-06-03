@@ -1,5 +1,5 @@
-from PPlay.sprite import Sprite
-from PPlay.mouse import Mouse
+from assets.PPlay.sprite import Sprite
+from assets.PPlay.mouse import Mouse
 
 import GVar
 
@@ -8,9 +8,9 @@ mouse = Mouse()
 class Difficulty(object):
     def __init__(self, window):
         self.window = window
-        self.easy_button = Sprite("./images/easy.png")
-        self.norm_button = Sprite("./images/norm.png")
-        self.hard_button = Sprite("./images/hard.png")
+        self.easy_button = Sprite("./assets/images/easy.png")
+        self.norm_button = Sprite("./assets/images/norm.png")
+        self.hard_button = Sprite("./assets/images/hard.png")
         self.__set_pos()
 
     def run(self):

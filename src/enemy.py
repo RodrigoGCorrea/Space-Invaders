@@ -1,5 +1,5 @@
-from PPlay.sprite import Sprite
-from PPlay.keyboard import Keyboard
+from assets.PPlay.sprite import Sprite
+from assets.PPlay.keyboard import Keyboard
 
 import GVar
 
@@ -25,7 +25,7 @@ class Enemy(object):
         while lin < 7:
             for col in range(len(line)):
                 if line[col] == "1":
-                    alien = Sprite("./images/alien.png")
+                    alien = Sprite("./assets/images/alien.png")
                     alien.set_position(265 + col * (alien.width + 10), GVar.ENEMY_SPAWN_HEIGHT + lin * (alien.height + 10))
                     self.enemy_mtx.append(alien)
             lin += 1

@@ -1,5 +1,5 @@
-from PPlay.window import Window
-from PPlay.keyboard import Keyboard
+from assets.PPlay.window import Window
+from assets.PPlay.keyboard import Keyboard
 from pygame.time import Clock
 from menu import Menu
 from play import Play
@@ -13,7 +13,7 @@ window.set_background_color((0, 0, 0))
 
 keyboard = Keyboard()
 menu = Menu(window)
-play = Play(window, "./lvl/level_1.txt")
+play = Play(window, "./assets/lvl/level_1.txt")
 difficulty_menu = Difficulty(window)
 clock = Clock()
 fps = Fps(window)
@@ -23,12 +23,12 @@ while GVar.STATE != 4:
     window.set_background_color((0, 0, 0))
     if keyboard.key_pressed("esc"):
         GVar.STATE = 0
-        play.__init__(window, "./lvl/level_1.txt")
+        play.__init__(window, "./assets/lvl/level_1.txt")
     if GVar.STATE == 0:
         menu.run()
     if GVar.STATE == 1:
         if GVar.DIFC_CHOSEN == True:
-            play.__init__(window, "./lvl/level_1.txt")
+            play.__init__(window, "./assets/lvl/level_1.txt")
             GVar.DIFC_CHOSEN = False
         play.run()
     if GVar.STATE == 2:

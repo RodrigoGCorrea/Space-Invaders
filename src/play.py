@@ -1,7 +1,8 @@
 from spaceship import Spaceship
 from enemy import Enemy
 from bullet import Bullet
-from PPlay.keyboard import Keyboard
+from assets.PPlay.keyboard import Keyboard
+from math import exp
 
 import GVar
 
@@ -54,9 +55,14 @@ class Play(object):
                             self.enemy.enemy_mtx.remove(alien)
 
     def new_level(self):
+        if self.level > GVar.LEVEL_AMOUNT:
+            self.level = 1
+            self.enemy.__init__(self.window, "./assets/lvl/level_" + str(self.level) + ".txt")
+            GVar.STATE = 0
         if len(self.enemy.enemy_mtx) == 0:
             self.level += 1
-            self.enemy.__init__(self.window, "./lvl/level_" + str(self.level) + ".txt")
+            if self.level <= GVar.LEVEL_AMOUNT:
+                self.enemy.__init__(self.window, "./assets/lvl/level_" + str(self.level) + ".txt")
 
     def game_over(self):
         for alien in self.enemy.enemy_mtx:
