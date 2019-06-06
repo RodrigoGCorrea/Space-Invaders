@@ -8,6 +8,7 @@ import GVar
 
 keyboard = Keyboard()
 
+
 class Play(object):
     def __init__(self, window, alien_spawn_adress):
         self.window = window
@@ -19,11 +20,12 @@ class Play(object):
             "left": 0,
             "right": 0,
             "up": 0,
-            "down": 0 
+            "down": 0
         }
         self.clock = 0
         self.level = 1
-    
+        self.point_total = 0
+
     def run(self):
         self.spaceship.run()
         self.enemy.run()
@@ -33,6 +35,8 @@ class Play(object):
         self.point()
         self.run_clock()
         self.new_level()
+        self.print_score()
+        print(self.point_total)
 
     def set_border(self):
         for alien in self.enemy.enemy_mtx:
@@ -44,7 +48,7 @@ class Play(object):
                 self.border["up"] = alien.y
             if alien.y + alien.height >= self.border["down"]:
                 self.border["down"] = alien.y + alien.height
-    
+
     def point(self):
         for bullet in self.bullet.bullet_array:
             if self.border["left"] <= bullet.x <= self.border["right"]:
@@ -53,16 +57,20 @@ class Play(object):
                         if alien.collided_perfect(bullet):
                             self.bullet.bullet_array.remove(bullet)
                             self.enemy.enemy_mtx.remove(alien)
+                            self.point_total += int(exp(-0.06 *
+                                                        self.clock) * 100)
 
     def new_level(self):
         if self.level > GVar.LEVEL_AMOUNT:
             self.level = 1
-            self.enemy.__init__(self.window, "./assets/lvl/level_" + str(self.level) + ".txt")
+            self.enemy.__init__(
+                self.window, "./assets/lvl/level_" + str(self.level) + ".txt")
             GVar.STATE = 0
         if len(self.enemy.enemy_mtx) == 0:
             self.level += 1
             if self.level <= GVar.LEVEL_AMOUNT:
-                self.enemy.__init__(self.window, "./assets/lvl/level_" + str(self.level) + ".txt")
+                self.enemy.__init__(
+                    self.window, "./assets/lvl/level_" + str(self.level) + ".txt")
 
     def game_over(self):
         for alien in self.enemy.enemy_mtx:
@@ -70,7 +78,22 @@ class Play(object):
                 GVar.STATE = 0
                 self.__init__(self.window, self.alien_spawn_adress)
                 break
-    
+
     def run_clock(self):
-        if len(self.enemy.enemy_mtx) != 0:
+        if len(self.enemy.enemy_mtx) != 0 and self.enemy.start == True:
             self.clock += self.window.delta_time()
+        else:
+            self.clock = 0
+
+    def print_score(self):
+        score = str(self.point_total)
+        if len(score) == 2:
+            score = "000" + score
+        elif len(score) == 3:
+            score = "00" + score
+        elif len(score) == 4:
+            score = "0" + score
+        self.window.draw_text(
+            "pontos:", 60, 20, "./assets/font/pixel.ttf", 30, (255, 255, 255))
+        self.window.draw_text(str(self.point_total), 150,
+                              20, "./assets/font/pixel.ttf", 30, (255, 255, 255))
