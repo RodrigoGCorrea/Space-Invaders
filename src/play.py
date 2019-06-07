@@ -25,6 +25,7 @@ class Play(object):
         self.clock = 0
         self.level = 1
         self.point_total = 0
+        self.life = GVar.LIVES
 
     def run(self):
         self.spaceship.run()
@@ -36,7 +37,8 @@ class Play(object):
         self.run_clock()
         self.new_level()
         self.print_score()
-        print(self.point_total)
+        self.collision()
+        self.print_life()
 
     def set_border(self):
         for alien in self.enemy.enemy_mtx:
@@ -78,6 +80,9 @@ class Play(object):
                 GVar.STATE = 0
                 self.__init__(self.window, self.alien_spawn_adress)
                 break
+        if self.life < 0:
+            GVar.STATE = 0
+            self.__init__(self.window, self.alien_spawn_adress)
 
     def run_clock(self):
         if len(self.enemy.enemy_mtx) != 0 and self.enemy.start == True:
@@ -97,3 +102,14 @@ class Play(object):
             "pontos:", 60, 20, "./assets/font/pixel.ttf", 30, (255, 255, 255))
         self.window.draw_text(str(self.point_total), 150,
                               20, "./assets/font/pixel.ttf", 30, (255, 255, 255))
+    
+    def collision(self):
+        for enemy_bullet in self.enemy.enemy__bullet_mtx:
+            if self.spaceship.spaceship.collided(enemy_bullet):
+                self.spaceship.__init__(self.window)
+                self.enemy.enemy__bullet_mtx.remove(enemy_bullet)
+                self.life -= 1
+
+    def print_life(self):
+        self.window.draw_text("vidas:", 48, 80, "./assets/font/pixel.ttf", 30, (255, 255, 255))
+        self.window.draw_text(str(self.life), 99, 80, "./assets/font/pixel.ttf", 30, (255, 255, 255))
