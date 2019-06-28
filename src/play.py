@@ -3,6 +3,7 @@ from enemy import Enemy
 from bullet import Bullet
 from assets.PPlay.keyboard import Keyboard
 from math import exp
+from rank import check_rank
 
 import GVar
 
@@ -64,6 +65,7 @@ class Play(object):
 
     def new_level(self):
         if self.level > GVar.LEVEL_AMOUNT:
+            check_rank(self.point_total)
             self.level = 1
             self.enemy.__init__(
                 self.window, "./assets/lvl/level_" + str(self.level) + ".txt")
@@ -77,10 +79,12 @@ class Play(object):
     def game_over(self):
         for alien in self.enemy.enemy_mtx:
             if alien.collided_perfect(self.spaceship.spaceship):
+                check_rank(self.point_total)
                 GVar.STATE = 0
                 self.__init__(self.window, self.alien_spawn_adress)
                 break
         if self.life < 0:
+            check_rank(self.point_total)
             GVar.STATE = 0
             self.__init__(self.window, self.alien_spawn_adress)
 
@@ -102,7 +106,7 @@ class Play(object):
             "pontos:", 60, 20, "./assets/font/pixel.ttf", 30, (255, 255, 255))
         self.window.draw_text(str(self.point_total), 150,
                               20, "./assets/font/pixel.ttf", 30, (255, 255, 255))
-    
+
     def collision(self):
         for enemy_bullet in self.enemy.enemy__bullet_mtx:
             if self.spaceship.spaceship.collided(enemy_bullet):
@@ -111,5 +115,7 @@ class Play(object):
                 self.life -= 1
 
     def print_life(self):
-        self.window.draw_text("vidas:", 48, 80, "./assets/font/pixel.ttf", 30, (255, 255, 255))
-        self.window.draw_text(str(self.life), 99, 80, "./assets/font/pixel.ttf", 30, (255, 255, 255))
+        self.window.draw_text(
+            "vidas:", 48, 80, "./assets/font/pixel.ttf", 30, (255, 255, 255))
+        self.window.draw_text(str(self.life), 99, 80,
+                              "./assets/font/pixel.ttf", 30, (255, 255, 255))

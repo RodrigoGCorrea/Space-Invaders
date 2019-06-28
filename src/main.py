@@ -4,6 +4,7 @@ from pygame.time import Clock
 from menu import Menu
 from play import Play
 from fps import Fps
+from rank import Rank
 from difficulty import Difficulty
 import GVar
 
@@ -15,6 +16,7 @@ keyboard = Keyboard()
 menu = Menu(window)
 play = Play(window, "./assets/lvl/level_1.txt")
 difficulty_menu = Difficulty(window)
+rank = Rank(window)
 clock = Clock()
 fps = Fps(window)
 
@@ -33,6 +35,8 @@ while GVar.STATE != 4:
         play.run()
     if GVar.STATE == 2:
         difficulty_menu.run()
+    if GVar.STATE == 3:
+        rank.run()
     fps.print_fps(clock)
     window.update()
     clock.tick(120)
